@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                            :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 10:17:29 by jiawli            #+#    #+#             */
-/*   Updated: 2025/07/31 14:24:05 by jiawli           ###   ########.fr       */
+/*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
+/*   Updated: 2025/08/08 20:18:51 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,138 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 
-typedef struct s_parameter_checker
+
+
+// ========================================================================
+// ENUMS
+// ========================================================================
+
+// Tile types
+typedef enum a_type
 {
-	int	length;
-	int	height;
-	int entrance;
-	int exit;
-	int collectible;
-}	t_parameter_check;
+    TILE_WALL,
+    TILE_EMPTY,
+}				t_type;
 
-//so_long.c
-char	**parse_para(char *file_name);
-void	close_fd_and_exit(int fd, char *msg);
 
-//free.c
-void	exit_prog(char ***parameter, char *msg);
-void	free_parameter(char ***parameter);
 
-//validation.c
-void	validate_parameter(char **parameter);
+// Movement directions
+typedef enum a_direction
+{
+    DIR_U,
+    DIR_D,
+    DIR_L,
+    DIR_R,
+}				t_direction;
 
-//utils.c
-int	arr_len(char **arr);
+
+// ========================================================================
+// STRUCTS (按依赖顺序排列)
+// ========================================================================
+
+// Map validation results
+typedef struct s_parameter_check
+{
+    int			length;
+    int			height;
+    int			entrance;
+    int			exit;
+    int			collectible;
+}				t_parameter_check;
+
+
+
+// Individual tile information (必须在 t_game 之前定义)
+typedef struct s_tile
+{
+    t_type		type;
+    int			x;
+    int			y;
+    bool		is_collectible;
+    bool		is_exit;
+    bool		is_visited;
+
+}				t_tile;
+
+// Player information (必须在 t_game 之前定义)
+typedef struct s_player
+{
+    int			x;
+    int			y;
+    int			has_collectible;
+    int			movements;
+
+}				t_player;
+
+// Point structure
+typedef struct s_point
+{
+    int			x;
+    int			y;
+}				t_point;
+
+
+
+// Main game structure (现在可以引用 t_tile 和 t_player)
+typedef struct s_game
+{
+    int				length;
+    int				height;
+    int				total_collectible;
+    char			**map;              // Raw map data for path checking
+    t_tile			**board;            
+    t_player		*player;            
+    bool		    is_won;
+    
+}				t_game;
+
+// Parameter for event hooks
+// typedef struct s_param
+// {
+//     t_view		*view;
+//     t_game		*game;
+// }				t_param;
+
+// ========================================================================
+// FUNCTION DECLARATIONS
+// ========================================================================
+
+// game.c 
+t_game			*create_game(t_parameter_check *checker, char **parameter);
+bool			move(t_game *game, t_direction direction);
+bool			path_check(t_game *game);
+
+// movement.c
+bool			move_player(t_game *game, t_direction direction);
+
+
+
+// free.c
+void			exit_prog(char ***parameter, t_game **game, char *msg);
+void			free_parameter(char ***parameter);
+void			free_game(t_game **game);
+void			free_board(t_tile ***board, int height);
+
+// so_long.c
+char			**parse_para(char *file_name);
+void			close_fd_and_exit(int fd, char *msg);
+
+// validation.c
+t_parameter_check	validate_parameter(char **parameter);
+
+// utils.c
+int				arr_len(char **arr);
+int				two_to_one(int x, int y, t_game *game);
+int				gws(int n);
+void			set_next_point(t_point *point, t_direction direction);
+bool			is_valid_point(t_game *game, int x, int y);
+
+// console testing functions
+void			print_map(t_game *game);
+void			print_game_status(t_game *game);
+void			console_game_loop(t_game *game);
+t_direction		get_user_input(void);
 
 #endif

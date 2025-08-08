@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:50:12 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/07 16:25:10 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/08 20:37:05 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	close_fd_and_exit(int fd, char *msg)
 {
 	close(fd);
-	exit_prog(NULL, msg);
+	exit_prog(NULL, NULL, msg);
 }
 
 
@@ -25,12 +25,12 @@ static void	check_empty_lines(char *buf, ssize_t bytes_read)
 	int	i;
 
 	if (buf[0] == '\n')
-		exit_prog(NULL, "Map starts with empty line.");
+		exit_prog(NULL, NULL, "Map starts with empty line.");
 	i = 0;
 	while (i < bytes_read - 1)
 	{
 		if (buf[i] == '\n' && buf[i + 1] == '\n')
-			exit_prog(NULL, "Map has empty line.");
+			exit_prog(NULL, NULL, "Map has empty line.");
 		i++;
 	}
 }
@@ -41,7 +41,7 @@ static void	check_filename(char *file_name)
 
 	len = ft_strlen(file_name);
 	if (len < 5 || ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
-		exit_prog(NULL, "Should be .ber file");
+		exit_prog(NULL, NULL, "Should be .ber file");
 }
 
 char	**parse_para(char *file_name)
@@ -54,7 +54,7 @@ char	**parse_para(char *file_name)
 	check_filename(file_name);
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		exit_prog(NULL, "Error on opening a map.");
+		exit_prog(NULL, NULL, "Error on opening a map.");
 	bytes_read = read(fd, buf, 40000);
 	if (bytes_read == -1)
 		close_fd_and_exit(fd, "Error on reading map.");
@@ -67,15 +67,31 @@ char	**parse_para(char *file_name)
 	check_empty_lines(buf, bytes_read);
 	parameter = ft_split(buf, '\n');
 	if (!parameter)
-		exit_prog(NULL, "Memory allocation failed: parsing the map.");
+		exit_prog(NULL, NULL, "Memory allocation failed: parsing the map.");
 	return (parameter);
 }
-int	main(int ac, char **av)
+int	so_long(int ac, char **av)
 {
-	char **parameter;
+	char **parameter = NULL;
+    t_game *game = NULL;
+    t_parameter_check checker;
+	
 	if (ac != 2)
-		exit_prog(NULL, "Give me a map 00");
-
+		exit_prog(NULL, NULL, "Give me a map");
+	
 	parameter = parse_para(av[1]);
-	validate_parameter(parameter);
+	checker = validate_parameter(parameter);
+	game = create_game(&checker, parameter); 
+	if(!path_check(game))
+		exit_prog(&parameter, &game, "No valid path in the map.");
+
+   
+    
+    exit_prog(&parameter, &game, NULL);
+    return (0);
+}
+
+int main(int ac, char **av)
+{
+	so_long(ac, av);
 }
