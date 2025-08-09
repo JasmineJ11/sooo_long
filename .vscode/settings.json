@@ -1,6 +1,21 @@
 {
 	"files.associations": {
 		"cstdlib": "c",
-		"so_long.h": "c"
+		"so_long.h": "c",
+		"array": "c",
+		"chrono": "c",
+		"cmath": "c",
+		"unordered_map": "c",
+		"format": "c",
+		"functional": "c",
+		"istream": "c",
+		"memory": "c",
+		"numeric": "c",
+		"optional": "c",
+		"ostream": "c",
+		"string_view": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"variant": "c"
 	}
 }

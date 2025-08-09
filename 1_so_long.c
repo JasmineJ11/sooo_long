@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   1_so_long.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:50:12 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/08 20:37:05 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/09 18:52:59 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	check_filename(char *file_name)
 		exit_prog(NULL, NULL, "Should be .ber file");
 }
 
-char	**parse_para(char *file_name)
+static char	**parse_para(char *file_name)
 {
 	int		fd;
 	ssize_t	bytes_read;
@@ -70,7 +70,7 @@ char	**parse_para(char *file_name)
 		exit_prog(NULL, NULL, "Memory allocation failed: parsing the map.");
 	return (parameter);
 }
-int	so_long(int ac, char **av)
+int	main(int ac, char **av)
 {
 	char **parameter = NULL;
     t_game *game = NULL;
@@ -84,14 +84,9 @@ int	so_long(int ac, char **av)
 	game = create_game(&checker, parameter); 
 	if(!path_check(game))
 		exit_prog(&parameter, &game, "No valid path in the map.");
-
-   
+	free_parameter(&parameter);
+	start_engine(game);
     
     exit_prog(&parameter, &game, NULL);
     return (0);
-}
-
-int main(int ac, char **av)
-{
-	so_long(ac, av);
 }

@@ -1,6 +1,5 @@
 NAME = so_long
 
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -11,7 +10,7 @@ MLX_DIR = MLX42
 O_DIR = objdir
 
 # Files
-SRCS = so_long.c free.c validation.c utils.c game.c story.c movement.c view_utils.c
+SRCS = so_long.c free.c validation.c utils.c ini_game.c
 OBJS = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))
 
 # Libraries
@@ -48,9 +47,6 @@ $(O_DIR)/%.o: %.c so_long.h | $(O_DIR)
 # Link final executable
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(MLX_LIB) -o $(NAME)
-	echo "┌─────────────────────────────────┐"
-	echo "│ ~~ \033[33m🎮 so_long ready! ✅\033[0m ~~ │"
-	echo "└─────────────────────────────────┘"
 
 # Clean targets
 clean:
