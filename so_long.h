@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/09 18:53:06 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/15 16:22:06 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
+# include "MLX42/MLX42.h"
 
 
 
 // ========================================================================
-// ENUMS
+
 // ========================================================================
 
 // Tile types
@@ -36,15 +37,6 @@ typedef enum a_type
 }				t_type;
 
 
-
-// Movement directions
-typedef enum a_direction
-{
-    DIR_U,
-    DIR_D,
-    DIR_L,
-    DIR_R,
-}				t_direction;
 
 
 
@@ -84,6 +76,18 @@ typedef struct s_player
 
 }				t_player;
 
+// Graphics structure
+typedef struct s_graphics
+{
+    mlx_t        *mlx;
+    mlx_image_t  *img_wall;
+    mlx_image_t  *img_floor;
+    mlx_image_t  *img_player;
+    mlx_image_t  *img_collectible;
+    mlx_image_t  *img_exit;
+} t_graphics;
+
+
 
 // Main game structure (可以引用 t_tile 和 t_player)
 typedef struct s_game
@@ -94,6 +98,7 @@ typedef struct s_game
     t_tile			**board;            
     t_player		*player;            
     bool		    is_won;
+    t_graphics      *graphics;
     
 }				t_game;
 
@@ -107,12 +112,7 @@ typedef struct s_point
 
 
 
-// Parameter for event hooks
-// typedef struct s_param
-// {
-//     t_view		*view;
-//     t_game		*game;
-// }				t_param;
+
 
 // ========================================================================
 // FUNCTION DECLARATIONS
@@ -120,19 +120,20 @@ typedef struct s_point
 
 // ini_game.c 
 t_game			*create_game(t_parameter_check *checker, char **parameter);
-bool			move(t_game *game, t_direction direction);
 bool			path_check(t_game *game);
 
 // movement.c
-bool			move_player(t_game *game, t_direction direction);
+bool            move_player(t_game *game, int dx, int dy);
 
 
 
 // free.c
-void			exit_prog(char ***parameter, t_game **game, char *msg);
+void			exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *msg);
 void			free_parameter(char ***parameter);
 void			free_game(t_game **game);
 void			free_board(t_tile ***board, int height);
+void            free_graphics(t_graphics **graphics);
+
 
 // so_long.c
 void			close_fd_and_exit(int fd, char *msg);
@@ -145,7 +146,8 @@ int				arr_len(char **arr);
 
 
 // engine.c
-void start_engine(t_game game);
+void start_engine(t_game *game);
+
 
 
 #endif

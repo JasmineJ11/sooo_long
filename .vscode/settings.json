@@ -17,5 +17,6 @@
 		"tuple": "c",
 		"type_traits": "c",
 		"variant": "c"
-	}
+	},
+	"cmake.sourceDirectory": "/home/jiawli/Documents/10_MyGithub/so_long/MLX42"
 }

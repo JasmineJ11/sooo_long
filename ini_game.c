@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:36:28 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/08 20:18:51 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/15 16:31:42 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_tile **allocate_board(t_parameter_check *checker, char ***parameter, t_
     
     board = malloc(sizeof(t_tile*) * checker->height);
     if (!board)
-        exit_prog(parameter, game, "Memory allocation failed: board rows.");
+        exit_prog(parameter, game, &((*game)->graphics), "Memory allocation failed: board rows.");
     
     while (y < checker->height)
     {
@@ -59,7 +59,7 @@ static t_tile **allocate_board(t_parameter_check *checker, char ***parameter, t_
         if (!board[y])
         {
             free_board(&board, y);
-            exit_prog(parameter, game, "Memory allocation failed: board columns.");
+            exit_prog(parameter, game, &((*game)->graphics), "Memory allocation failed: board columns.");
         }
         y++;
     }
@@ -81,7 +81,7 @@ static t_player *create_player(char **parameter, t_game *game)
     
     player = malloc(sizeof(t_player));
     if (!player)
-        exit_prog(&parameter, &game, "Memory allocation failed: player creation.");
+        exit_prog(&parameter, &game, &(game->graphics), "Memory allocation failed: player creation.");
     
     player->x = 0;
     player->y = 0;
@@ -97,7 +97,7 @@ t_game *create_game(t_parameter_check *checker, char **parameter)
     
     game = malloc(sizeof(t_game));
     if (!game)
-        exit_prog(&parameter, NULL, "Memory allocation failed: game creation.");
+        exit_prog(&parameter, NULL, NULL, "Memory allocation failed: game creation.");
     
     game->length = checker->length;
     game->height = checker->height;
