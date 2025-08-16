@@ -6,33 +6,14 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 12:11:30 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/15 16:21:06 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/16 14:28:08 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 
-void free_graphics(t_graphics **graphics)
-{
-    if (graphics && *graphics)
-    {
-        if ((*graphics)->img_wall)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_wall);
-        if ((*graphics)->img_floor)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_floor);
-        if ((*graphics)->img_player)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_player);
-        if ((*graphics)->img_collectible)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_collectible);
-        if ((*graphics)->img_exit)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_exit);
-        if ((*graphics)->mlx)
-            mlx_terminate((*graphics)->mlx);
-        free(*graphics);
-        *graphics = NULL;
-    }
-}
+
 
 static void	free_row(t_tile **row)
 {
@@ -101,7 +82,7 @@ void	exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *ms
 	free_game(game);
 	if (!msg)
 	{
-		printf("Game Over!\n");
+		printf("Little kitten, you have walked so far, searching for a familiar voice, a comforting figure, and the dream you once left behind. But what you sought was never us.\nWhat you truly lost was never in someone somewhere else.\nWhat you were truly searching for… was yourself, all along.\nAnd now, at last… you have found yourself.\nNice to meet You ˚> 𖥦 <)/♡\n");
 		exit(EXIT_SUCCESS);
 	}
 	printf("Error: %s\n", msg);

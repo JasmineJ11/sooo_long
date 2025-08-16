@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/15 16:22:06 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/16 09:33:21 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_tile
     bool		is_collectible;
     bool		is_exit;
     bool		is_visited;
+    bool		is_collected;
 
 }				t_tile;
 
@@ -132,7 +133,12 @@ void			exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *
 void			free_parameter(char ***parameter);
 void			free_game(t_game **game);
 void			free_board(t_tile ***board, int height);
+
+//free_graphics.c
+void	free_all_textures(mlx_texture_t *t1, mlx_texture_t *t2,
+		mlx_texture_t *t3, mlx_texture_t *t4, mlx_texture_t *t5);
 void            free_graphics(t_graphics **graphics);
+
 
 
 // so_long.c

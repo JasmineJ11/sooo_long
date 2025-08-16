@@ -10,7 +10,7 @@ MLX_DIR = MLX42
 O_DIR = objdir
 
 # Files
-SRCS = so_long.c free.c validation.c utils.c ini_game.c ini_game_helper.c engine.c movement.c
+SRCS = so_long.c free.c validation.c utils.c ini_game.c ini_game_helper.c engine.c movement.c free_graphics.c
 OBJS = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))
 
 # Libraries
