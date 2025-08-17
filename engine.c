@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 15:25:05 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/17 10:27:24 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ static void	key_callback(mlx_key_data_t keydata, void *param)
 		if (dx != 0 || dy != 0)
 		{
 			move_player(game, dx, dy);      // 负责移动和合法性判断
-			show_instances_on_window(game); // 重新
+			//show_instances_on_window(game); // 重新
 		}
 	}
 	if (keydata.key == MLX_KEY_ESCAPE)
-		exit_prog(NULL, &game, &(game->graphics), "Game window closed X.x\n");
+		exit_prog(NULL, &game, &(game->graphics), "Close window > <\n");
 }
 
 static void	texture_to_image(t_game *game, mlx_texture_t *tw, mlx_texture_t *tf,

@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:10:03 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 14:20:28 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/17 10:44:44 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,9 @@ static const char *cat_lines[] = {
     "You have walked so far, yet something still feels missing. Lift your head… do you see me? I am not far from you. Take one more step… and you will understand."
 };
 
-bool move_player(t_game *game, int dx, int dy)
+
+void    collect_ins(t_game *game, t_tile tile, mlx_image_t *collect_ins, int nx, int ny)
 {
-    int nx = game->player->x + dx;
-    int ny = game->player->y + dy;
-    if (nx < 0 || nx >= game->length || ny < 0 || ny >= game->height)
-        return false;
-    t_tile *tile = &game->board[ny][nx];
-    if (tile->type == TILE_WALL)
-        return false; 
-    // 收集物
     if (tile->is_collectible && !tile->is_collected)
     {
         tile->is_collected = true;
@@ -42,8 +35,31 @@ bool move_player(t_game *game, int dx, int dy)
         game->is_won = true;
         exit_prog(NULL, &game, &(game->graphics), NULL);
     }
+}
+
+void    move_player_ins(mlx_image_t *player, int nx, int ny)
+{
+    player->instances->x = nx * 64;
+    player->instances->y = ny * 64;
+    
+}
+
+bool move_player(t_game *game, int dx, int dy)
+{
+    int nx = game->player->x + dx;
+    int ny = game->player->y + dy;
+    if (nx < 0 || nx >= game->length || ny < 0 || ny >= game->height)
+        return false;
+    t_tile *tile = &game->board[ny][nx];
+    if (tile->type == TILE_WALL)
+        return false; 
+    // 收集物
+    collect_ins(game, tile, game->graphics->img_collectible,nx, ny);
+    
     game->player->x = nx;
     game->player->y = ny;
+    move_player_ins(game->graphics->img_player, nx, ny);
+    
     game->player->movements++;
     ft_putstr_fd("Steps taken: ", 1);
     ft_putnbr_fd(game->player->movements, 1);

@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 09:33:21 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/16 16:59:57 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,23 @@ typedef struct s_graphics
 {
     mlx_t        *mlx;
     mlx_image_t  *img_wall;
-    mlx_image_t  *img_floor;
+    mlx_image_t  *img_floor; 
     mlx_image_t  *img_player;
     mlx_image_t  *img_collectible;
     mlx_image_t  *img_exit;
 } t_graphics;
+
+
+/*
+mlx_image_to_window(mlx, img_player)
+img_player->instances->x = 42;
+
+mlx_image_t *image =  ??? 
+int instance_number = mlx_image_to_window(mlx, image);
+image->instances[instance_number].x = 42;
+image->instances[instance_number].enabled = false;
+
+*/
 
 
 
