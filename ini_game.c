@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:36:28 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 13:20:40 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/18 10:42:59 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void init_tile(t_tile *tile, int x, int y, char map_char)
     tile->is_collectible = (map_char == 'C');
     tile->is_exit = (map_char == 'E');
     tile->is_visited = false;
+    tile->is_collected = false;
 }
 
 static void init_board_tiles(t_tile **board, t_parameter_check *checker, char **parameter, t_game *game)
@@ -106,6 +107,7 @@ t_game *create_game(t_parameter_check *checker, char **parameter)
     game->board = create_board(checker, parameter, game);
     game->is_won = false;
     game->graphics = NULL;
+    game->collect_ins_ids = NULL;
 
     return game;
 }

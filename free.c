@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 12:11:30 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 14:28:08 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/18 15:09:53 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *ms
 	free_game(game);
 	if (!msg)
 	{
-		printf("Little kitten, you have walked so far, searching for a familiar voice, a comforting figure, and the dream you once left behind. But what you sought was never us.\nWhat you truly lost was never in someone somewhere else.\nWhat you were truly searching for… was yourself, all along.\nAnd now, at last… you have found yourself.\nNice to meet You ˚> 𖥦 <)/♡\n");
+		printf("Hi, little kitten. You have wandered so far, searching for my voice, my shadow, and our dream you once left behind.\nBut haven’t you noticed? I was always here, waiting in the quiet corners of your heart.\nWe were never apart.\nNice to meet you ˚> 𖥦 <)/♡\n");
 		exit(EXIT_SUCCESS);
 	}
 	printf("Error: %s\n", msg);

@@ -6,51 +6,54 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/17 10:27:24 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/18 16:13:40 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	show_collect_on_window(t_game *game)
+// static void	show_collect_on_window(t_game *game)
+// {
+// 	t_tile	*tile;
+// 	int		shown;
+// 	int		y;
+// 	int		x;
+
+// 	shown = 0;
+// 	y = 0;
+// 	while (y < game->height)
+// 	{
+// 		x = 0;
+// 		while (x < game->length)
+// 		{
+// 			tile = &game->board[y][x]; // 只显示第一个未被收集的收集物
+// 			if (tile->is_collectible && !tile->is_collected && shown == 0)
+// 			{
+// 				mlx_image_to_window(game->graphics->mlx,
+// 					game->graphics->img_collectible, x * 64, y * 64);
+// 				shown = 1;
+// 			}
+// 			// 只有收集完所有收集物才显示出口
+// 			if (tile->is_exit
+// 				&& game->player->has_collectible == game->total_collectible)
+// 				mlx_image_to_window(game->graphics->mlx,
+// 					game->graphics->img_exit, x * 64, y * 64);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+
+static void	ini_collect_insids(t_game *game)
 {
-	t_tile	*tile;
-	int		shown;
+	int		ids;
 	int		y;
 	int		x;
-
-	shown = 0;
-	y = 0;
-	while (y < game->height)
-	{
-		x = 0;
-		while (x < game->length)
-		{
-			tile = &game->board[y][x]; // 只显示第一个未被收集的收集物
-			if (tile->is_collectible && !tile->is_collected && shown == 0)
-			{
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_collectible, x * 64, y * 64);
-				shown = 1;
-			}
-			// 只有收集完所有收集物才显示出口
-			if (tile->is_exit
-				&& game->player->has_collectible == game->total_collectible)
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_exit, x * 64, y * 64);
-			x++;
-		}
-		y++;
-	}
-}
-
-static void	show_instances_on_window(t_game *game)
-{
 	t_tile	*tile;
+	int		insids;
 
-	int		y;
-	int		x;
-
+	game->collect_ins_ids = malloc(sizeof(int) * game->total_collectible);
+	ids = 0;
 	y = 0;
 	while (y < game->height)
 	{
@@ -58,20 +61,58 @@ static void	show_instances_on_window(t_game *game)
 		while (x < game->length)
 		{
 			tile = &game->board[y][x];
-			if (tile->type == TILE_WALL)
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_wall, x * 64, y * 64);
-			else
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_floor, x * 64, y * 64);
-			show_collect_on_window(game);
+			if (tile->is_collectible)
+			{
+				insids = mlx_image_to_window(game->graphics->mlx,
+						game->graphics->img_collectible, x * 64, y * 64);
+				game->graphics->img_collectible->instances[insids].enabled = false;
+				game->collect_ins_ids[ids++] = insids;
+				
+				
+			}
+			// 初始化时创建 exit 实例，并隐藏
+			if (tile->is_exit)
+			{
+				int exit_id = mlx_image_to_window(game->graphics->mlx, game->graphics->img_exit, x * 64, y * 64);
+				game->graphics->img_exit->instances[exit_id].enabled = false;
+				game->graphics->exit_ins_id = exit_id; // 保存到 graphics 结构体
+			}
 			x++;
 		}
 		y++;
 	}
+	
+   //  show the first collectible at start
+   if (game->total_collectible > 0)
+	game->graphics->img_collectible->instances[game->collect_ins_ids[0]].enabled = true;
+}
+
+static void	show_instances_on_window(t_game *game)
+{
+	// 1.floor and wall first
+	int y = 0;
+	while (y < game->height) {
+		int x = 0;
+		while (x < game->length) {
+			t_tile *tile = &game->board[y][x];
+			if (tile->type == TILE_WALL)
+				mlx_image_to_window(game->graphics->mlx, game->graphics->img_wall, x * 64, y * 64);
+			else
+				mlx_image_to_window(game->graphics->mlx, game->graphics->img_floor, x * 64, y * 64);
+			
+				
+			x++;
+		}
+		y++;
+	}
+
+
+	
 	mlx_image_to_window(game->graphics->mlx, game->graphics->img_player,
 		game->player->x * 64, game->player->y * 64);
 }
+
+
 
 static void	key_callback(mlx_key_data_t keydata, void *param)
 {
@@ -94,8 +135,8 @@ static void	key_callback(mlx_key_data_t keydata, void *param)
 			dx = 1;
 		if (dx != 0 || dy != 0)
 		{
-			move_player(game, dx, dy);      // 负责移动和合法性判断
-			//show_instances_on_window(game); // 重新
+			move_player(game, dx, dy); // 负责移动和合法性判断
+										// show_instances_on_window(game); // 重新
 		}
 	}
 	if (keydata.key == MLX_KEY_ESCAPE)
@@ -134,7 +175,7 @@ static bool	init_mlx_and_images(t_game *game)
 		return (false);
 	}
 	game->graphics->mlx = mlx_init(game->length * 64, game->height * 64,
-			"MISSAKISSA", false);
+			"MissaKissa", false);
 	if (!game->graphics->mlx)
 	{
 		free_all_textures(tw, tf, tp, tc, te);
@@ -146,9 +187,12 @@ static bool	init_mlx_and_images(t_game *game)
 		&& game->graphics->img_exit);
 }
 
+
+
 void	start_engine(t_game *game)
 {
-	extern t_graphics *g_graphics;
+	
+	
 	game->graphics = malloc(sizeof(t_graphics));
 	if (!game->graphics)
 		exit_prog(NULL, &game, NULL, "Memory allocation failed: graphics.");
@@ -158,8 +202,10 @@ void	start_engine(t_game *game)
 			"Failed to initialize MLX engine");
 		return ;
 	}
-	ft_putstr_fd("Hi, little kitten. Why are you crying? If you wish to find the answer, follow the wind… the first one is waiting for you.\n", 1);
 	show_instances_on_window(game);
+	ft_putstr_fd("Hi, little kitten. Why are you crying? Come and find me, the wind will give you answer…\n", 1);
+	
+	ini_collect_insids(game);
 	mlx_key_hook(game->graphics->mlx, key_callback, game);
 	mlx_loop(game->graphics->mlx);
 }

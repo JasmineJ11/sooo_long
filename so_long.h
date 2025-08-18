@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 16:59:57 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/18 16:19:26 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_graphics
     mlx_image_t  *img_player;
     mlx_image_t  *img_collectible;
     mlx_image_t  *img_exit;
+    int          exit_ins_id; // 出口实例的id
 } t_graphics;
 
 
@@ -107,21 +108,15 @@ typedef struct s_game
 {
     int				length;
     int				height;
-    int				total_collectible;
+    
     t_tile			**board;            
     t_player		*player;            
     bool		    is_won;
     t_graphics      *graphics;
+    int				total_collectible;
+    int             *collect_ins_ids;
     
 }				t_game;
-
-
-// Point structure
-typedef struct s_point
-{
-    int			x;
-    int			y;
-}				t_point;
 
 
 
@@ -148,7 +143,7 @@ void			free_board(t_tile ***board, int height);
 
 //free_graphics.c
 void	free_all_textures(mlx_texture_t *t1, mlx_texture_t *t2,
-		mlx_texture_t *t3, mlx_texture_t *t4, mlx_texture_t *t5);
+        mlx_texture_t *t3, mlx_texture_t *t4, mlx_texture_t *t5);
 void            free_graphics(t_graphics **graphics);
 
 
