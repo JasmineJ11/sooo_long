@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_ini_game_helper.c                                :+:      :+:    :+:   */
+/*   ini_game_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 16:40:29 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/09 21:13:36 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/19 09:19:00 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	flood_fill(t_game *game, int x, int y)
 	flood_fill(game, x + 1, y);		
 }
 
-// To check if there is a valid path from entrance to exit.
+
 bool	path_check(t_game *game)
 {
 	int	i;
@@ -55,3 +55,4 @@ bool	path_check(t_game *game)
 	}
 	return (true); 
 }
+

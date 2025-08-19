@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 12:11:30 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/18 15:09:53 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/19 14:17:53 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ void	free_game(t_game **game)
 			free((*game)->player);
 			(*game)->player = NULL;
 		}
+		if((*game)->collect_ins_ids)
+		{
+			free((*game)->collect_ins_ids);
+			(*game)->collect_ins_ids = NULL;
+		}
+			
 		free_board(&(*game)->board, (*game)->height);
 		free(*game);
 		*game = NULL;
@@ -82,7 +88,7 @@ void	exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *ms
 	free_game(game);
 	if (!msg)
 	{
-		printf("Hi, little kitten. You have wandered so far, searching for my voice, my shadow, and our dream you once left behind.\nBut haven’t you noticed? I was always here, waiting in the quiet corners of your heart.\nWe were never apart.\nNice to meet you ˚> 𖥦 <)/♡\n");
+		printf("Hi, little kitten. Thank you… for finding me, after so long.\nI’ve been here all along, hidden in the echoes you chased, in the shadows you followed, in the dreams you thought were far away.\nYou wandered so far… yet never left the place where I waited.\nWe were never apart.\nI am You, and nice to meet you ˚> 𖥦 <)/♡\n");
 		exit(EXIT_SUCCESS);
 	}
 	printf("Error: %s\n", msg);

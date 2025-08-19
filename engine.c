@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/18 16:13:40 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/19 13:30:36 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,41 @@
 // 	}
 // }
 
-static void	ini_collect_insids(t_game *game)
+static void	ini_exit_ins(t_game *game, int x, int y, t_tile *tile)
+{
+	int	exit_id;
+
+	if (tile->is_exit)
+	{
+		exit_id = mlx_image_to_window(game->graphics->mlx,
+				game->graphics->img_exit, x * 64, y * 64);
+		game->graphics->img_exit->instances[exit_id].enabled = false;
+		game->graphics->exit_ins_id = exit_id;
+	}
+}
+static void	ini_col_ins(t_game *game, int x, int y, t_tile *tile,
+		int *ids)
+{
+	int insids;
+	if (tile->is_collectible)
+	{
+		insids = mlx_image_to_window(game->graphics->mlx,
+				game->graphics->img_collectible, x * 64, y * 64);
+		game->graphics->img_collectible->instances[insids].enabled = false;
+		game->collect_ins_ids[*ids] = insids;
+		(*ids)++;
+	}
+}
+static void	ini_col_exit_insids(t_game *game)
 {
 	int		ids;
 	int		y;
 	int		x;
 	t_tile	*tile;
-	int		insids;
-
+	
 	game->collect_ins_ids = malloc(sizeof(int) * game->total_collectible);
 	ids = 0;
+	
 	y = 0;
 	while (y < game->height)
 	{
@@ -61,58 +86,44 @@ static void	ini_collect_insids(t_game *game)
 		while (x < game->length)
 		{
 			tile = &game->board[y][x];
-			if (tile->is_collectible)
-			{
-				insids = mlx_image_to_window(game->graphics->mlx,
-						game->graphics->img_collectible, x * 64, y * 64);
-				game->graphics->img_collectible->instances[insids].enabled = false;
-				game->collect_ins_ids[ids++] = insids;
-				
-				
-			}
-			// 初始化时创建 exit 实例，并隐藏
-			if (tile->is_exit)
-			{
-				int exit_id = mlx_image_to_window(game->graphics->mlx, game->graphics->img_exit, x * 64, y * 64);
-				game->graphics->img_exit->instances[exit_id].enabled = false;
-				game->graphics->exit_ins_id = exit_id; // 保存到 graphics 结构体
-			}
+		
+			ini_col_ins(game, x, y, tile, &ids);
+			ini_exit_ins(game, x, y, tile);
 			x++;
 		}
 		y++;
 	}
-	
-   //  show the first collectible at start
-   if (game->total_collectible > 0)
-	game->graphics->img_collectible->instances[game->collect_ins_ids[0]].enabled = true;
+	if (game->total_collectible > 0)
+		game->graphics->img_collectible->instances[game->collect_ins_ids[0]].enabled = true;
 }
 
 static void	show_instances_on_window(t_game *game)
 {
+	int		y;
+	int		x;
+	t_tile	*tile;
+
 	// 1.floor and wall first
-	int y = 0;
-	while (y < game->height) {
-		int x = 0;
-		while (x < game->length) {
-			t_tile *tile = &game->board[y][x];
+	y = 0;
+	while (y < game->height)
+	{
+		x = 0;
+		while (x < game->length)
+		{
+			tile = &game->board[y][x];
 			if (tile->type == TILE_WALL)
-				mlx_image_to_window(game->graphics->mlx, game->graphics->img_wall, x * 64, y * 64);
+				mlx_image_to_window(game->graphics->mlx,
+					game->graphics->img_wall, x * 64, y * 64);
 			else
-				mlx_image_to_window(game->graphics->mlx, game->graphics->img_floor, x * 64, y * 64);
-			
-				
+				mlx_image_to_window(game->graphics->mlx,
+					game->graphics->img_floor, x * 64, y * 64);
 			x++;
 		}
 		y++;
 	}
-
-
-	
 	mlx_image_to_window(game->graphics->mlx, game->graphics->img_player,
 		game->player->x * 64, game->player->y * 64);
 }
-
-
 
 static void	key_callback(mlx_key_data_t keydata, void *param)
 {
@@ -134,10 +145,7 @@ static void	key_callback(mlx_key_data_t keydata, void *param)
 		if (keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT)
 			dx = 1;
 		if (dx != 0 || dy != 0)
-		{
-			move_player(game, dx, dy); // 负责移动和合法性判断
-										// show_instances_on_window(game); // 重新
-		}
+			move_player(game, dx, dy);
 	}
 	if (keydata.key == MLX_KEY_ESCAPE)
 		exit_prog(NULL, &game, &(game->graphics), "Close window > <\n");
@@ -187,12 +195,8 @@ static bool	init_mlx_and_images(t_game *game)
 		&& game->graphics->img_exit);
 }
 
-
-
 void	start_engine(t_game *game)
 {
-	
-	
 	game->graphics = malloc(sizeof(t_graphics));
 	if (!game->graphics)
 		exit_prog(NULL, &game, NULL, "Memory allocation failed: graphics.");
@@ -203,9 +207,9 @@ void	start_engine(t_game *game)
 		return ;
 	}
 	show_instances_on_window(game);
-	ft_putstr_fd("Hi, little kitten. Why are you crying? Come and find me, the wind will give you answer…\n", 1);
-	
-	ini_collect_insids(game);
+	ft_putstr_fd("Hi,little kitten. Why are you crying? Have you seen me? The stars will light the path of your dreams.\n",
+		1);
+	ini_col_exit_insids(game);
 	mlx_key_hook(game->graphics->mlx, key_callback, game);
 	mlx_loop(game->graphics->mlx);
 }

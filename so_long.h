@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/18 16:19:26 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:16:56 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 // ========================================================================
 
-// ========================================================================
+
 
 // Tile types
 typedef enum a_type
@@ -40,9 +40,9 @@ typedef enum a_type
 
 
 
-// STRUCTS (按依赖顺序排列)
+// STRUCTS 
 
-// Map validation results
+
 typedef struct s_parameter_check
 {
     int			length;
@@ -54,7 +54,7 @@ typedef struct s_parameter_check
 
 
 
-// Individual tile information (必须在 t_game 之前定义)
+
 typedef struct s_tile
 {
     t_type		type;
@@ -67,7 +67,7 @@ typedef struct s_tile
 
 }				t_tile;
 
-// Player information (必须在 t_game 之前定义)
+
 typedef struct s_player
 {
     int			x;
@@ -77,7 +77,7 @@ typedef struct s_player
 
 }				t_player;
 
-// Graphics structure
+
 typedef struct s_graphics
 {
     mlx_t        *mlx;
@@ -101,9 +101,6 @@ image->instances[instance_number].enabled = false;
 
 */
 
-
-
-// Main game structure (可以引用 t_tile 和 t_player)
 typedef struct s_game
 {
     int				length;
@@ -123,7 +120,7 @@ typedef struct s_game
 
 
 // ========================================================================
-// FUNCTION DECLARATIONS
+// FUNCTION
 // ========================================================================
 
 // ini_game.c 
@@ -142,7 +139,7 @@ void			free_game(t_game **game);
 void			free_board(t_tile ***board, int height);
 
 //free_graphics.c
-void	free_all_textures(mlx_texture_t *t1, mlx_texture_t *t2,
+void	        free_all_textures(mlx_texture_t *t1, mlx_texture_t *t2,
         mlx_texture_t *t3, mlx_texture_t *t4, mlx_texture_t *t5);
 void            free_graphics(t_graphics **graphics);
 

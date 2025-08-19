@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:50:12 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/16 13:28:06 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:33:51 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	main(int ac, char **av)
 	checker = validate_parameter(parameter);
 	game = create_game(&checker, parameter);
 	if (!path_check(game))
-		exit_prog(&parameter, &game, NULL, "No valid path in the map.");
+		exit_prog(&parameter, &game, NULL, "No way to go.");
 	free_parameter(&parameter);
 	start_engine(game);
-	exit_prog(&parameter, &game, &(game->graphics), NULL);
+	exit_prog(&parameter, &game, &(game->graphics), "OOpsiii..You haven't find me");
 	return (0);
 }
