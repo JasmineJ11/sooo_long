@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 17:09:31 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/21 18:15:33 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ static bool	init_mlx_and_images(t_game *game)
 	trs = ft_calloc(1, sizeof(t_textures));
 	if (!trs)
 		exit_prog(NULL, &game, &(game->graphics), "textures malloc fail.");
-	trs->tw = mlx_load_png("assets/wall.png");
-	trs->tf = mlx_load_png("assets/floor.png");
-	trs->tp = mlx_load_png("assets/player.png");
-	trs->tc = mlx_load_png("assets/collect.png");
-	trs->te = mlx_load_png("assets/exit.png");
+	trs->tw = mlx_load_png("texture/wall.png");
+	trs->tf = mlx_load_png("texture/floor.png");
+	trs->tp = mlx_load_png("texture/player.png");
+	trs->tc = mlx_load_png("texture/collect.png");
+	trs->te = mlx_load_png("texture/exit.png");
 	if (!trs->tw || !trs->tf || !trs->tp || !trs->tc || !trs->te)
 	{
 		free_all_textures(trs);
