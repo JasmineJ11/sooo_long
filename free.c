@@ -6,14 +6,11 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 12:11:30 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/19 14:17:53 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/21 14:48:41 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-
-
 
 static void	free_row(t_tile **row)
 {
@@ -51,12 +48,11 @@ void	free_game(t_game **game)
 			free((*game)->player);
 			(*game)->player = NULL;
 		}
-		if((*game)->collect_ins_ids)
+		if ((*game)->collect_ins_ids)
 		{
 			free((*game)->collect_ins_ids);
 			(*game)->collect_ins_ids = NULL;
 		}
-			
 		free_board(&(*game)->board, (*game)->height);
 		free(*game);
 		*game = NULL;
@@ -66,7 +62,7 @@ void	free_game(t_game **game)
 void	free_parameter(char ***parameter)
 {
 	int	i;
-	
+
 	if (parameter && *parameter)
 	{
 		i = 0;
@@ -81,16 +77,23 @@ void	free_parameter(char ***parameter)
 	}
 }
 
-void	exit_prog(char ***parameter, t_game **game, t_graphics **graphics, char *msg)
+void	exit_prog(char ***parameter, t_game **game, t_graphics **graphics,
+		char *msg)
 {
 	free_graphics(graphics);
 	free_parameter(parameter);
 	free_game(game);
 	if (!msg)
 	{
-		printf("Hi, little kitten. Thank you… for finding me, after so long.\nI’ve been here all along, hidden in the echoes you chased, in the shadows you followed, in the dreams you thought were far away.\nYou wandered so far… yet never left the place where I waited.\nWe were never apart.\nI am You, and nice to meet you ˚> 𖥦 <)/♡\n");
+		ft_putstr_fd("Hi, little kitten. Thank you…", 1);
+		ft_putstr_fd("for finding me, after so long.\n", 1);
+		ft_putstr_fd("You wandered so far…", 1);
+		ft_putstr_fd("yet never left the place where I waited.\n", 1);
+		ft_putstr_fd("We were never apart.\n", 1);
+		ft_putstr_fd("I am You, and nice to meet you ˚> 𖥦 <)/♡\n", 1);
 		exit(EXIT_SUCCESS);
 	}
-	printf("Error: %s\n", msg);
+	ft_putstr_fd("Error\n", 1);
+	ft_putstr_fd(msg, 1);
 	exit(EXIT_FAILURE);
 }

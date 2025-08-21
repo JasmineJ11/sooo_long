@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:50:12 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/19 15:33:51 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:31:47 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static void	check_empty_lines(char *buf, ssize_t bytes_read)
 	int	i;
 
 	if (buf[0] == '\n')
-		exit_prog(NULL, NULL, NULL, "Map starts with empty line.");
+		exit_prog(NULL, NULL, NULL, "Map starts with empty line.     ");
 	i = 0;
 	while (i < bytes_read - 1)
 	{
 		if (buf[i] == '\n' && buf[i + 1] == '\n')
-			exit_prog(NULL, NULL, NULL, "Map has empty line.");
+			exit_prog(NULL, NULL, NULL, "Map has empty line. How can i jump");
 		i++;
 	}
 }
@@ -39,7 +39,7 @@ static void	check_filename(char *file_name)
 
 	len = ft_strlen(file_name);
 	if (len < 5 || ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
-		exit_prog(NULL, NULL, NULL, "Should be .ber file");
+		exit_prog(NULL, NULL, NULL, "Should be berrrrr .ber file");
 }
 
 static char	**parse_para(char *file_name)
@@ -52,14 +52,14 @@ static char	**parse_para(char *file_name)
 	check_filename(file_name);
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		exit_prog(NULL, NULL, NULL, "Error on opening a map.");
+		exit_prog(NULL, NULL, NULL, "I can not open the map.");
 	bytes_read = read(fd, buf, 40000);
 	if (bytes_read == -1)
-		close_fd_and_exit(fd, "Error on reading map.");
+		close_fd_and_exit(fd, "I can not read the map.");
 	if (bytes_read == 0)
-		close_fd_and_exit(fd, "Cannot open an empty map.");
+		close_fd_and_exit(fd, "I can not open an empty map.");
 	if (bytes_read == 40000)
-		close_fd_and_exit(fd, "Map file too large (>40KB).");
+		close_fd_and_exit(fd, "Map file too large. too tired to go (>40KB).");
 	close(fd);
 	buf[bytes_read] = '\0';
 	check_empty_lines(buf, bytes_read);
@@ -69,12 +69,12 @@ static char	**parse_para(char *file_name)
 			"Memory allocation failed: parsing the map.");
 	return (parameter);
 }
+
 int	main(int ac, char **av)
 {
 	char				**parameter;
 	t_game				*game;
 	t_parameter_check	checker;
-	
 
 	parameter = NULL;
 	game = NULL;
@@ -87,6 +87,7 @@ int	main(int ac, char **av)
 		exit_prog(&parameter, &game, NULL, "No way to go.");
 	free_parameter(&parameter);
 	start_engine(game);
-	exit_prog(&parameter, &game, &(game->graphics), "OOpsiii..You haven't find me");
+	exit_prog(&parameter, &game, &(game->graphics),
+		"OOpsiii..You haven't find me");
 	return (0);
 }

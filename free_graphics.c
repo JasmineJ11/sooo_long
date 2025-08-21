@@ -1,39 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_graphics.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 09:44:56 by jiawli            #+#    #+#             */
+/*   Updated: 2025/08/21 14:49:14 by jiawli           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
-
-void	free_all_textures(mlx_texture_t *t1, mlx_texture_t *t2,
-		mlx_texture_t *t3, mlx_texture_t *t4, mlx_texture_t *t5)
+void	free_all_textures(t_textures *textures)
 {
-	if (t1)
-		mlx_delete_texture(t1);
-	if (t2)
-		mlx_delete_texture(t2);
-	if (t3)
-		mlx_delete_texture(t3);
-	if (t4)
-		mlx_delete_texture(t4);
-	if (t5)
-		mlx_delete_texture(t5);
+	if (textures->tw)
+		mlx_delete_texture(textures->tw);
+	if (textures->tf)
+		mlx_delete_texture(textures->tf);
+	if (textures->tp)
+		mlx_delete_texture(textures->tp);
+	if (textures->tc)
+		mlx_delete_texture(textures->tc);
+	if (textures->te)
+		mlx_delete_texture(textures->te);
+	free(textures);
 }
 
-void free_graphics(t_graphics **graphics)
+void	free_graphics(t_graphics **graphics)
 {
-    if (graphics && *graphics)
-    {
-        if ((*graphics)->img_wall)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_wall);
-        if ((*graphics)->img_floor)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_floor);
-        if ((*graphics)->img_player)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_player);
-        if ((*graphics)->img_collectible)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_collectible);
-        if ((*graphics)->img_exit)
-            mlx_delete_image((*graphics)->mlx, (*graphics)->img_exit);
-        if ((*graphics)->mlx)
-            mlx_terminate((*graphics)->mlx);
-        free(*graphics);
-        *graphics = NULL;
-    }
+	if (graphics && *graphics)
+	{
+		if ((*graphics)->img_wall)
+			mlx_delete_image((*graphics)->mlx, (*graphics)->img_wall);
+		if ((*graphics)->img_floor)
+			mlx_delete_image((*graphics)->mlx, (*graphics)->img_floor);
+		if ((*graphics)->img_player)
+			mlx_delete_image((*graphics)->mlx, (*graphics)->img_player);
+		if ((*graphics)->img_collectible)
+			mlx_delete_image((*graphics)->mlx, (*graphics)->img_collectible);
+		if ((*graphics)->img_exit)
+			mlx_delete_image((*graphics)->mlx, (*graphics)->img_exit);
+		if ((*graphics)->mlx)
+			mlx_terminate((*graphics)->mlx);
+		free(*graphics);
+		*graphics = NULL;
+	}
 }
