@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:50:12 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 10:31:47 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 12:11:05 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	check_filename(char *file_name)
 	size_t	len;
 
 	len = ft_strlen(file_name);
-	if (len < 5 || ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
+	if (len < 4 || ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
 		exit_prog(NULL, NULL, NULL, "Should be berrrrr .ber file");
 }
 
@@ -58,7 +58,7 @@ static char	**parse_para(char *file_name)
 		close_fd_and_exit(fd, "I can not read the map.");
 	if (bytes_read == 0)
 		close_fd_and_exit(fd, "I can not open an empty map.");
-	if (bytes_read == 40000)
+	if (bytes_read >= 40000)
 		close_fd_and_exit(fd, "Map file too large. too tired to go (>40KB).");
 	close(fd);
 	buf[bytes_read] = '\0';

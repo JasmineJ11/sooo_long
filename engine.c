@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 18:15:33 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 12:18:53 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	start_engine(t_game *game)
 	ft_putstr_fd("Hi,little kitten. Why are you crying? Have you seen me?\n",
 		1);
 	ft_putstr_fd("The stars will light the path of your dreams.\n", 1);
-	game->collect_ins_ids = malloc(sizeof(int) * game->total_collectible);
+	game->collect_ins_ids = calloc(1, sizeof(int) * game->total_collectible);
 	if (!game->collect_ins_ids)
 		exit_prog(NULL, &game, &(game->graphics), "Collect_ins_ids, Mem fail");
 	ini_col_exit_insids(game);

@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 15:07:26 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 10:05:54 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 # define SO_LONG_H
 
 # include "MLX42/MLX42.h"
-# include "ft_printf/ft_printf.h"
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-// ========================================================================
 
 // Tile types
 typedef enum a_type
@@ -72,7 +64,7 @@ typedef struct s_graphics
 	mlx_image_t		*img_player;
 	mlx_image_t		*img_collectible;
 	mlx_image_t		*img_exit;
-	int exit_ins_id; // 出口实例的id
+	int				exit_ins_id;
 }					t_graphics;
 
 typedef struct s_textures
@@ -83,17 +75,6 @@ typedef struct s_textures
 	mlx_texture_t	*tc;
 	mlx_texture_t	*te;
 }					t_textures;
-
-/*
-mlx_image_to_window(mlx, img_player)
-img_player->instances->x = 42;
-
-mlx_image_t			*image =  ???
-int					instance_number = mlx_image_to_window(mlx, image);
-image->instances[instance_number].x = 42;
-image->instances[instance_number].enabled = false;
-
-*/
 
 typedef struct s_game
 {

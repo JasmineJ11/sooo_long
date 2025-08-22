@@ -6,13 +6,13 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:10:03 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 17:48:48 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 15:44:00 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char	*cat_lines(int idx)
+static void	cat_lines(t_game *game, int idx)
 {
 	char *const	lines[] = {"Shhh… somewhere in the Milky Way, I hear\
 a voice… gentle and familiar,\
@@ -29,12 +29,18 @@ and yet a part of you still feels empty. One more step,\
 lift your head… do you see me? I’m here,\
 with my whole heart, loving you,always."};
 
-	return (lines[idx]);
+	if (idx >= 5)
+		ft_putstr_fd((char *)lines[4], 1);
+	else if (idx == game->total_collectible - 1)
+		ft_putstr_fd((char *)lines[4], 1);
+	else
+		ft_putstr_fd((char *)lines[idx], 1);
 }
 
 static void	if_exit(t_game *game, t_tile *tile)
 {
 	mlx_instance_t	*col_inx;
+
 	col_inx = game->graphics->img_exit->instances;
 	if (game->player->has_collectible == game->total_collectible)
 		col_inx[game->graphics->exit_ins_id].enabled = true;
@@ -62,12 +68,7 @@ static void	collect_ins(t_game *game, t_tile *tile, int nx, int ny)
 			col_ins[p_col].enabled = false;
 		if (p_col + 1 < game->total_collectible)
 			col_ins[p_col + 1].enabled = true;
-		if (game->total_collectible < 5 && p_col == game->total_collectible - 1)
-			ft_putstr_fd((char *)cat_lines(4), 1);
-		else
-			ft_putstr_fd((char *)cat_lines(p_col), 1);
-		if (p_col >= 5)
-			ft_putstr_fd((char *)cat_lines(4), 1);
+		cat_lines(game, p_col);
 		ft_putstr_fd("\n", 1);
 		game->player->has_collectible++;
 	}

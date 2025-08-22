@@ -5,7 +5,6 @@ CFLAGS = -Wall -Wextra -Werror
 
 # Directories
 LIBFT_PATH = libft
-PRINTF_PATH = ft_printf
 MLX_DIR = MLX42
 O_DIR = objdir
 
@@ -15,14 +14,13 @@ OBJS = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))
 
 # Libraries
 LIBFT = $(LIBFT_PATH)/libft.a
-PRINTF = $(PRINTF_PATH)/libftprintf.a
 MLX_LIB = $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 # Headers
-HEADERS = -I. -I$(MLX_DIR)/include -I$(LIBFT_PATH) -I$(PRINTF_PATH)
+HEADERS = -I. -I$(MLX_DIR)/include -I$(LIBFT_PATH) 
 
 # Main targets
-all: $(MLX_DIR) $(LIBFT) $(PRINTF) $(NAME)
+all: $(MLX_DIR) $(LIBFT)  $(NAME) 
 
 # Clone and build MLX42
 $(MLX_DIR):
@@ -32,9 +30,6 @@ $(MLX_DIR):
 # Build libraries
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
-
-$(PRINTF):
-	$(MAKE) -C $(PRINTF_PATH)
 
 # Create object directory
 $(O_DIR):
@@ -46,21 +41,21 @@ $(O_DIR)/%.o: %.c so_long.h | $(O_DIR)
 
 # Link final executable
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(MLX_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_LIB) -o $(NAME)
 
 # Clean targets
 clean:
 	rm -rf $(O_DIR) $(MLX_DIR)
 	$(MAKE) clean -C $(LIBFT_PATH)
-	$(MAKE) clean -C $(PRINTF_PATH)
+	
 
 fclean: clean
 	rm -f $(NAME)
 	$(MAKE) fclean -C $(LIBFT_PATH)
-	$(MAKE) fclean -C $(PRINTF_PATH)
+	
 
 re: fclean all
 
 .SILENT:
 .PHONY: all clean fclean re
-#.SECONDARY: $(OBJ)
+.SECONDARY: $(OBJS)
