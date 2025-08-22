@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 10:05:54 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 17:21:12 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_parameter_check	validate_parameter(char **parameter);
 
 // utils.c
 int					arr_len(char **arr);
+void				shuffle_array(mlx_instance_t *col_inx, int length);
 
 // engine.c
 void				start_engine(t_game *game);

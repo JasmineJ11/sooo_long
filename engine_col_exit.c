@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 10:26:58 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 14:51:06 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 17:26:19 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	ini_col_exit_insids(t_game *game)
 		y++;
 	}
 	col_inx = game->graphics->img_collectible->instances;
+	shuffle_array(col_inx, game->total_collectible);
 	show_first(game, col_inx);
 }

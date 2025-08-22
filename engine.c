@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 12:18:53 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/22 17:27:03 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	key_callback(mlx_key_data_t keydata, void *param)
 	int		dy;
 
 	game = (t_game *)param;
-	if (keydata.action == MLX_PRESS)
+	if (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS)
 	{
 		dx = 0;
 		dy = 0;
