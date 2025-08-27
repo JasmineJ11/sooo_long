@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:45:04 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 17:27:03 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:53:51 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ static void	ini_wfp_on_window(t_game *game)
 		{
 			tile = &game->board[y][x];
 			if (tile->type == TILE_WALL)
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_wall, x * 64, y * 64);
+				image_to_window(game, game->graphics->img_wall, x * 64, y * 64);
 			else
-				mlx_image_to_window(game->graphics->mlx,
-					game->graphics->img_floor, x * 64, y * 64);
+			{
+				image_to_window(game, game->graphics->img_floor,
+					x * 64, y * 64);
+			}
 			x++;
 		}
 		y++;
 	}
-	mlx_image_to_window(game->graphics->mlx, game->graphics->img_player,
+	image_to_window(game, game->graphics->img_player,
 		game->player->x * 64, game->player->y * 64);
 }
 

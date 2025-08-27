@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:55:58 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 14:13:58 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:34:22 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static void	dimensions(char **parameter, t_parameter_check *checker)
 
 	checker->height = arr_len(parameter);
 	checker->length = ft_strlen(parameter[0]);
-	if (checker->height > 130 || checker->length > 130)
+	if (checker->height > 33 || checker->length > 60)
 		exit_prog(&parameter, NULL, NULL,
-			"Map dimensions too00 large (max 130x130).");
+			"Map dimensions too00 large (max 60x33).");
 	if (checker->height < 3 || checker->length < 3)
 		exit_prog(&parameter, NULL, NULL, "Map too00 small.");
 	i = 0;

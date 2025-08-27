@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:24:05 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 17:21:12 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:50:39 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ void				free_board(t_tile ***board, int height);
 
 // free_graphics.c
 void				free_all_textures(t_textures *textures);
-
 void				free_graphics(t_graphics **graphics);
+int32_t				image_to_window(t_game *game, mlx_image_t *img,
+						int x, int y);
 
 // so_long.c
 void				close_fd_and_exit(int fd, char *msg);

@@ -6,11 +6,21 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 09:44:56 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/21 14:49:14 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:55:44 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int32_t	image_to_window(t_game *game, mlx_image_t *img, int x, int y)
+{
+	int32_t	check;
+
+	check = mlx_image_to_window(game->graphics->mlx, img, x, y);
+	if (check == -1)
+		exit_prog(NULL, &game, &(game->graphics), "img to window fail.");
+	return (check);
+}
 
 void	free_all_textures(t_textures *textures)
 {

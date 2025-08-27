@@ -6,7 +6,7 @@
 /*   By: jiawli <jiawli@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 10:26:58 by jiawli            #+#    #+#             */
-/*   Updated: 2025/08/22 17:26:19 by jiawli           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:51:47 by jiawli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 static void	ini_exit_ins(t_game *game, int x, int y)
 {
-	int	exit_id;
+	int32_t	exit_id;
 
-	exit_id = mlx_image_to_window(game->graphics->mlx, game->graphics->img_exit,
-			x * 64, y * 64);
+	exit_id = image_to_window(game, game->graphics->img_exit, x * 64, y * 64);
 	game->graphics->img_exit->instances[exit_id].enabled = false;
 	game->graphics->exit_ins_id = exit_id;
 }
 
 static void	ini_col_ins(t_game *game, int x, int y, int *ids)
 {
-	int	insids;
+	int32_t	insids;
 
-	insids = mlx_image_to_window(game->graphics->mlx,
-			game->graphics->img_collectible, x * 64, y * 64);
+	insids = image_to_window(game, game->graphics->img_collectible,
+			x * 64, y * 64);
 	game->graphics->img_collectible->instances[insids].enabled = false;
 	game->collect_ins_ids[*ids] = insids;
 	(*ids)++;
